@@ -1,12 +1,12 @@
 <template>
     <el-row>
         <el-col :span="8" v-for="(o, index) in books" :key="o.title" :offset="index > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card :body-style="{ padding: '0px' }" @click.native="handleCardClick">
             <img :src="o.icon" class="image">
             <div style="padding: 14px;">
                 <span>{{o.title}}</span>
                 <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
+                <!--<time class="time">{{ currentDate }}</time>-->
                 <el-button type="text" class="button">操作按钮</el-button>
                 </div>
             </div>
@@ -58,6 +58,11 @@ export default {
       currentDate: new Date(),
       books: [{ title: '历史', icon: book1Jpg }, { title: '文学', icon: book2Jpg }],
     };
+  },
+  methods: {
+    handleCardClick(e) {
+      console.info(e);
+    },
   },
 };
 </script>

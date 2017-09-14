@@ -49,9 +49,11 @@
 <script>
 import Books from './components/Books';
 import User from './components/User';
+import store from './store'
 
 export default {
   name: 'app',
+  store,
   data() {
     return {
       selected: 'repo',
