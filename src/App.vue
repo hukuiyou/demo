@@ -1,7 +1,7 @@
 <template>
   <div class="page-tabbar">
     <div class="page-wrap">
-      <div class="page-title">书架</div>
+      <div class="page-title" v-show="selected === 'repo'">{{pageTitle}}</div>
       <mt-tab-container class="page-tabbar-container" v-model="selected">
         <mt-tab-container-item id="repo">
           <!--<mt-cell v-for="n in 10" :title="'cell ' + n" />-->
@@ -15,11 +15,12 @@
         </mt-tab-container-item>-->
         <mt-tab-container-item id="mine">
           <div class="page-part">
-            <mt-cell v-for="n in 12" :title="'cell ' + n" />
+            <user></user>
+            <!--<mt-cell v-for="n in 12" :title="'cell ' + n" />-->
           </div>
-          <router-link to="/">
+          <!--<router-link to="/">
             <mt-button type="danger" size="large">退出</mt-button>
-          </router-link>
+          </router-link>-->
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -47,6 +48,7 @@
 
 <script>
 import Books from './components/Books';
+import User from './components/User';
 
 export default {
   name: 'app',
@@ -55,7 +57,15 @@ export default {
       selected: 'repo',
     };
   },
-  components: { Books },
+  computed: {
+    pageTitle() {
+      if (this.selected === 'repo') {
+        return '书架';
+      }
+      return 'Andy';
+    },
+  },
+  components: { Books, User },
 };
 </script>
 
@@ -69,5 +79,9 @@ export default {
     overflow: auto;
     height: 100%;
     padding-bottom: 100px;
+  }
+
+  .page-title {
+    text-align: center;
   }
 </style>
