@@ -1,10 +1,10 @@
 <template>
     <el-row>
-        <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+        <el-col :span="8" v-for="(o, index) in books" :key="o.title" :offset="index > 0 ? 2 : 0">
             <el-card :body-style="{ padding: '0px' }">
-            <img src="../assets/hamburger.png" class="image">
+            <img :src="o.icon" class="image">
             <div style="padding: 14px;">
-                <span>好吃的汉堡</span>
+                <span>{{o.title}}</span>
                 <div class="bottom clearfix">
                 <time class="time">{{ currentDate }}</time>
                 <el-button type="text" class="button">操作按钮</el-button>
@@ -32,7 +32,7 @@
   }
 
   .image {
-    width: 100%;
+    width: 80%;
     display: block;
   }
 
@@ -48,11 +48,15 @@
 </style>
 
 <script>
+import book1Jpg from '../assets/b1.jpg';
+import book2Jpg from '../assets/b2.jpg';
+
 export default {
   name: 'books',
   data() {
     return {
       currentDate: new Date(),
+      books: [{ title: '历史', icon: book1Jpg }, { title: '文学', icon: book2Jpg }],
     };
   },
 };
