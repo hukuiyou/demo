@@ -1,18 +1,33 @@
 <template>
-    <el-row>
-        <el-col :span="8" v-for="(o, index) in books" :key="o.title" :offset="index > 0 ? 2 : 0">
+    <!--<el-row :gutter="20">
+        <el-col :span="8" v-for="(o, index) in books" :key="o.title">
             <el-card :body-style="{ padding: '0px' }" @click.native="handleCardClick">
             <img :src="o.icon" class="image">
             <div style="padding: 14px;">
                 <span>{{o.title}}</span>
                 <div class="bottom clearfix">
-                <!--<time class="time">{{ currentDate }}</time>-->
+                <time class="time">{{ currentDate }}</time>
                 <el-button type="text" class="button">操作按钮</el-button>
                 </div>
             </div>
             </el-card>
         </el-col>
-    </el-row>
+    </el-row>-->
+    <div>
+      <el-row v-for="(row, rowIndex) in rowBooks" :key="rowIndex" :gutter="20" class="bookRow">
+        <el-col :span="8" v-for="(o, colIndex) in row" :key="o.id">
+          <el-card :body-style="{ padding: '0px' }" @click.native="handleCardClick(o)" class="bookListCard">
+            <img :src="o.coverImgUrl" class="image">
+            <div style="padding: 14px;">
+                <span class="bookName">{{o.name}}</span>
+                <div class="bottom clearfix">
+                <!--<el-button type="text" class="button">操作按钮</el-button>-->
+                </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
 </template>
 
 <style>
@@ -32,7 +47,8 @@
   }
 
   .image {
-    width: 80%;
+    width: 256px;
+    height: 256px;
     display: block;
   }
 
@@ -45,24 +61,58 @@
   .clearfix:after {
       clear: both
   }
+
+  .bookRow {
+    margin-bottom: 10px;
+  }
+
+  .bookListCard {
+    height: 20rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    .image {
+      width: 100px;
+      height: 128px;
+      display: block;
+    }
+
+    .bookListCard {
+      height: 14rem;
+    }
+
+    .bookName {
+      font-size: 0.8rem;
+    }
+  }
 </style>
 
 <script>
-import book1Jpg from '../assets/b1.jpg';
-import book2Jpg from '../assets/b2.jpg';
+import { mapGetters, mapActions } from 'vuex'
+import route from '../router'
 
 export default {
   name: 'books',
   data() {
     return {
       currentDate: new Date(),
-      books: [{ title: '历史', icon: book1Jpg }, { title: '文学', icon: book2Jpg }],
     };
   },
   methods: {
-    handleCardClick(e) {
-      console.info(e);
+    handleCardClick(o) {
+      let path = `/bookDetail/${o.id}`;
+      route.push(path);
     },
   },
+  computed: {
+    ...mapGetters({
+     books: 'allBooks',
+     rowBooks: 'rowBooks'
+    }),
+  },
+  created () {
+    this.$store.dispatch('getAllBooks')
+  }
+
 };
 </script>
